@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>AMANCAYA HOUSE</title>
+</head>
+<body>
+    <div class="header">
+        <h1>AMANCAYA HOUSE</h1>
+    </div>
+
+    <!-- Pantalla de Inicio de Sesión -->
+    <div id="loginContainer" class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm" onsubmit="return showBlackScreen(event)">
+            <div class="input-group">
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="username" maxlength="25" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" maxlength="10" required>
+            </div>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+
+    <!-- Pantalla Negra -->
+    <div id="blackScreen" class="pantalla-negra" style="display: none;">
+        <div id="userInfo"></div>
+        <div class="recarga">
+            <h2>Monto a Recargar:</h2>
+            <form id="recargaForm" onsubmit="return handleRecarga(event)">
+                <input type="text" id="montoRecarga" placeholder="Ingrese monto" required maxlength="4" oninput="validateInput(this)">
+                <button type="submit">Recargar</button>
+            </form>
+        </div>
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Cargando...</p>
+        </div>
+        <div id="uploadSection" style="display: none;">
+            <h2>Imagen Cargada:</h2>
+            <img id="predeterminedImage" src="monaco.jpg" alt="Imagen cargada" class="full-screen-image">
+        </div>
+    </div>
+
+    <script>
+        function showBlackScreen(event) {
+            event.preventDefault(); 
+            const username = document.getElementById('username').value;
+
+            
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('blackScreen').style.display = 'block';
+
+        
+            document.getElementById('userInfo').innerText = `BIENVENIDO ${username}`;
+        }
+
+        function handleRecarga(event) {
+            event.preventDefault(); 
+            const monto = document.getElementById('montoRecarga').value;
+
+        
+            document.querySelector('.recarga').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('uploadSection').style.display = 'block';
+            }, 2000);
+        }
+
+        function validateInput(input) {
+            
+            input.value = input.value.replace(/\D/g, '');
+
+            
+            if (input.value.length > 4) {
+                input.value = input.value.slice(0, 4);
+            }
+        }
+    </script>
+</body>
+</html>
